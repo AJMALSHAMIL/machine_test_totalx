@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "832545867949",
-    "project_id": "machine-test-totalx",
-    "storage_bucket": "machine-test-totalx.firebasestorage.app"
+    "project_number": "95507811854",
+    "project_id": "kart-project-cdfed",
+    "storage_bucket": "kart-project-cdfed.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:832545867949:android:adbd47d25df34701705e24",
+        "mobilesdk_app_id": "1:95507811854:android:a029c9c66fe5c16bfc765f",
+        "android_client_info": {
+          "package_name": "com.example.kart_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP9MpY4i2VK0gQsuliyNMfzuH66MN0uwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95507811854:android:a5053ab172102a66fc765f",
         "android_client_info": {
           "package_name": "com.example.machine_test_totalx"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZmRW75SZqUNlm5y8eLQmXxyzL8CNRZCw"
+          "current_key": "AIzaSyAP9MpY4i2VK0gQsuliyNMfzuH66MN0uwI"
         }
       ],
       "services": {

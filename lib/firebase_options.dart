@@ -47,29 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDONPlQyMXrQBpLmi-3ZG7C8Ge5hYSGZn0',
-    appId: '1:832545867949:web:bd6d435aae842d7a705e24',
-    messagingSenderId: '832545867949',
-    projectId: 'machine-test-totalx',
-    authDomain: 'machine-test-totalx.firebaseapp.com',
-    storageBucket: 'machine-test-totalx.firebasestorage.app',
-    measurementId: 'G-JS5358YQNC',
+    apiKey: 'AIzaSyA4uj4z-vom-9431zJeZ7nt0XvxreFR6Cg',
+    appId: '1:95507811854:web:e39ebdc9ed8f916dfc765f',
+    messagingSenderId: '95507811854',
+    projectId: 'kart-project-cdfed',
+    authDomain: 'kart-project-cdfed.firebaseapp.com',
+    storageBucket: 'kart-project-cdfed.appspot.com',
+    measurementId: 'G-B93L3MS3BR',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAZmRW75SZqUNlm5y8eLQmXxyzL8CNRZCw',
-    appId: '1:832545867949:android:adbd47d25df34701705e24',
-    messagingSenderId: '832545867949',
-    projectId: 'machine-test-totalx',
-    storageBucket: 'machine-test-totalx.firebasestorage.app',
+    apiKey: 'AIzaSyAP9MpY4i2VK0gQsuliyNMfzuH66MN0uwI',
+    appId: '1:95507811854:android:a5053ab172102a66fc765f',
+    messagingSenderId: '95507811854',
+    projectId: 'kart-project-cdfed',
+    storageBucket: 'kart-project-cdfed.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA9cxJz-pNEAB_ulpYx0GZZJ8eeL3xVfIU',
-    appId: '1:832545867949:ios:f1063563674578fe705e24',
-    messagingSenderId: '832545867949',
-    projectId: 'machine-test-totalx',
-    storageBucket: 'machine-test-totalx.firebasestorage.app',
+    apiKey: 'AIzaSyD1sF7TDs-VIFhFeh-M9TtMHodVk89k49g',
+    appId: '1:95507811854:ios:dcdab606083a4fd7fc765f',
+    messagingSenderId: '95507811854',
+    projectId: 'kart-project-cdfed',
+    storageBucket: 'kart-project-cdfed.appspot.com',
     iosBundleId: 'com.example.machineTestTotalx',
   );
+
 }

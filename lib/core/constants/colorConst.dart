@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 class Pallete {
-  static const orange = Color(0xffF0592A);
   static const black = Color(0xff000000);
   static const white = Color(0xffFFFFFF);
   static const red = Color(0xffFF0000);

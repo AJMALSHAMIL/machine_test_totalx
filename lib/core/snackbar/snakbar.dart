@@ -9,7 +9,7 @@ void showSnackBar({required BuildContext context, required String content}) {
       content: Text(
         content,
         style: const TextStyle(
-            fontWeight: FontWeight.w500, color: Pallete.orange),
+            fontWeight: FontWeight.w500, color: Pallete.black),
       ),
     ));
 }
