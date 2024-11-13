@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832545867949",
+    "project_id": "machine-test-totalx",
+    "storage_bucket": "machine-test-totalx.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832545867949:android:adbd47d25df34701705e24",
+        "android_client_info": {
+          "package_name": "com.example.machine_test_totalx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZmRW75SZqUNlm5y8eLQmXxyzL8CNRZCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
