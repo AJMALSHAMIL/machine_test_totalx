@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:machine_test_totalx/features/homePage/screen/homePage.dart';
+import 'package:pinput/pinput.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 import '../../../core/constants/colorConst.dart';
 import '../../../core/constants/imageConst.dart';
 import '../../../main.dart';
@@ -13,6 +15,8 @@ class OtpPage extends ConsumerStatefulWidget {
 }
 
 class _OtpPageState extends ConsumerState<OtpPage> {
+
+  TextEditingController otpController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +34,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
               Consumer(builder: (context, ref, child) {
                 return InkWell(
                   onTap: () {
-                    // if (phoneController.text.length <= 10) {
-                    //   generateAndPrintRandomNumber();
-                    //   print('111111111111');
-                    //   Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phoneController.text),));
-                    // } else {
-                    //   phoneController.text;
-                    //   showSnackBarWhite(
-                    //       context: context, content: selectedLanguage!.words['Enter Mobile Number']);
-                    // }
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => const Homepage(),));
                   },
                   child: Container(
                     height: h * 0.06,
@@ -70,7 +66,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: h*0.15,),
+            SizedBox(height: h*0.1,),
             Center(
               child: SizedBox(
                 width: w*0.5,
@@ -86,48 +82,59 @@ class _OtpPageState extends ConsumerState<OtpPage> {
             ),
             SizedBox(height: h*0.02,),
             Text("Enter the verification code we just sent to your",style:TextStyle(fontSize: w * 0.04, color: Pallete.black,fontWeight: FontWeight.w400)),
-            Text("number +91 ${9539786243}",style:TextStyle(fontSize: w * 0.04, color: Pallete.black,fontWeight: FontWeight.w400)),
+            Text("number +91 *******21",style:TextStyle(fontSize: w * 0.04, color: Pallete.black,fontWeight: FontWeight.w400)),
             SizedBox(height: h*0.02,),
-            // Container(
-            //     height: h * 0.07,
-            //     width: w * 0.9,
-            //     decoration: BoxDecoration(
-            //         color: Pallete.white,
-            //         borderRadius: BorderRadius.circular(w * 0.02)),
-            //     child: Padding(
-            //       padding: EdgeInsets.only(
-            //           left: w * 0.2, right: w * 0.2, top: w * 0.02),
-            //       child: PinCodeTextField(
-            //         appContext: context,
-            //         cursorColor: Colors.transparent,
-            //         textStyle: TextStyle(fontSize: w * 0.04),
-            //         length: 4,
-            //         controller: otpController,
-            //         keyboardType: TextInputType.number,
-            //         onChanged: (value) {},
-            //         pinTheme: PinTheme(
-            //           shape: PinCodeFieldShape.box,
-            //           borderRadius: BorderRadius.circular(w * 0.03),
-            //           fieldHeight: h * 0.05,
-            //           fieldWidth: w * 0.1,
-            //           activeFillColor: Colors.grey.shade200,
-            //           selectedFillColor: Colors.grey.shade200,
-            //           inactiveFillColor: Colors.grey.shade200,
-            //           activeColor: Colors.grey[100],
-            //           selectedColor: Colors.grey[100],
-            //           inactiveColor: Colors.grey[100],
-            //         ),
-            //         boxShadows: [
-            //           BoxShadow(
-            //             color: Colors.black.withOpacity(0.1),
-            //             blurRadius: 5,
-            //             offset: const Offset(0, 3),
-            //           ),
-            //         ],
-            //         enableActiveFill: true,
-            //         onCompleted: (value) {},
-            //       ),
-            //     )),
+            SizedBox(
+              width: w*1,
+              height: w*0.14,
+              child: Pinput(
+                length: 6,
+                controller: otpController,
+                focusedPinTheme: PinTheme(
+                  decoration: BoxDecoration(
+                    color: Pallete.lightGrey,
+                    border: Border.all(
+                        color: Pallete.black,
+                        width: w*0.007
+                    ),
+                    borderRadius: BorderRadius.circular(w*0.03),
+                  ),
+                ),
+                defaultPinTheme: PinTheme(
+                    decoration: BoxDecoration(
+                      color: Pallete.lightGrey,
+                      border: Border.all(
+                          color: Pallete.darkGrey,
+                          width: w*0.002
+                      ),
+                      borderRadius: BorderRadius.circular(w*0.03),
+                    )
+                ),
+              ),
+            ),
+            SizedBox(height: h*0.01,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Countdown(
+                  seconds: 59,
+                  build: (BuildContext , int ) {
+                    return Text(int.toString(),style: TextStyle(color: Pallete.red,fontWeight: FontWeight.w400,fontSize: w*0.04),);
+                  },
+                ),
+              Text("Sec",style: TextStyle(color: Pallete.red,fontWeight: FontWeight.w400,fontSize: w*0.04),),
+              ],
+            ),
+            SizedBox(height: h*0.02,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Don't Get OTP? ",style: TextStyle(fontSize: w * 0.04, color: Pallete.black,fontWeight: FontWeight.w400),),
+                Text("Resend",style: TextStyle(fontSize: w * 0.04, color: Pallete.blue,fontWeight: FontWeight.w400),),
+              ],
+            )
           ],
         ),
       ),

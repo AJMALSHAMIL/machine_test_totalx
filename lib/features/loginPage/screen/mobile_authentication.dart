@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/colorConst.dart';
 import '../../../core/constants/imageConst.dart';
+import '../../../core/snackbar/snakbar.dart';
 import '../../../main.dart';
+import 'otp_page.dart';
 
 class MobileAuthentication extends ConsumerStatefulWidget {
   const MobileAuthentication({super.key});
@@ -13,6 +15,9 @@ class MobileAuthentication extends ConsumerStatefulWidget {
 }
 
 class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
+
+  TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +35,13 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
               Consumer(builder: (context, ref, child) {
                 return InkWell(
                   onTap: () {
-                    // if (phoneController.text.length <= 10) {
-                    //   generateAndPrintRandomNumber();
-                    //   print('111111111111');
-                    //   Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(phoneController.text),));
-                    // } else {
-                    //   phoneController.text;
-                    //   showSnackBarWhite(
-                    //       context: context, content: selectedLanguage!.words['Enter Mobile Number']);
-                    // }
+                    if (phoneController.text.length <= 10) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => OtpPage(),));
+                    } else {
+                      phoneController.text;
+                      showSnackBar(
+                          context: context, content: 'Enter Mobile Number');
+                    }
                   },
                   child: Container(
                     height: h * 0.06,
@@ -69,11 +72,11 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
         padding:  EdgeInsets.all(w*0.03),
         child: Column(
           children: [
-            SizedBox(height: h*0.15,),
+            SizedBox(height: h*0.1,),
             SizedBox(
               width: w*0.5,
               height: h*0.2,
-              child: Image(image: AssetImage(ImageConst.mobilepage)),
+              child: const Image(image: AssetImage(ImageConst.mobilepage))
             ),
             SizedBox(height: h*0.07,),
             Row(
@@ -94,7 +97,7 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(w * 0.02)),
               child: TextFormField(
-                // controller: phoneController,
+                controller: phoneController,
                 cursorColor: Pallete.black,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [
@@ -108,10 +111,10 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                 ),
                 decoration: InputDecoration(
                   hintText: "  Enter Phone Number*",
-                  hintStyle: TextStyle(color: Pallete.lightGrey),
+                  hintStyle: const TextStyle(color: Pallete.lightGrey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(w*0.03),
-                    borderSide: BorderSide(color: Pallete.lightGrey),
+                    borderSide: const BorderSide(color: Pallete.lightGrey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(w*0.03), // Rounded borders
