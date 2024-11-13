@@ -30,11 +30,10 @@ class _HomepageState extends ConsumerState<Homepage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(w * 0.04),
                       ),
-                      content:Container(
-                        height: h*0.4,
-                        color: Pallete.white,
-                        child: Padding(
-                          padding:  EdgeInsets.all(w*0.02),
+                      content:SingleChildScrollView(
+                        child: Container(
+                          height: h*0.48,
+                          color: Pallete.white,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +48,110 @@ class _HomepageState extends ConsumerState<Homepage> {
                               SizedBox(height: h*0.02,),
                               Text("Name", style: TextStyle(fontSize: w * 0.04, color: Pallete.lightGrey,fontWeight: FontWeight.w500),),
                               SizedBox(height: h*0.01,),
-
+                              Container(
+                                height: h * 0.07,
+                                width: w * 1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w * 0.02)),
+                                child: TextFormField(
+                                  cursorColor: Pallete.black,
+                                  keyboardType: TextInputType.name,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(10),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w400,
+                                    color: Pallete.black,
+                                  ),
+                                  decoration: InputDecoration(
+                                      hintText: " Name",
+                                      hintStyle: TextStyle(color: Pallete.lightGrey),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(w*0.03),
+                                        borderSide: BorderSide(color: Pallete.lightGrey),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(w*0.03), // Rounded borders
+                                        borderSide: BorderSide(color: Pallete.black,width: w*0.004),
+                                      )
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: h*0.01,),
+                              Text("Age", style: TextStyle(fontSize: w * 0.04, color: Pallete.lightGrey,fontWeight: FontWeight.w500),),
+                              SizedBox(height: h*0.01,),
+                              Container(
+                                height: h * 0.07,
+                                width: w * 1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w * 0.02)),
+                                child: TextFormField(
+                                  cursorColor: Pallete.black,
+                                  keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(3),
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  style: TextStyle(
+                                    fontSize: w * 0.04,
+                                    fontWeight: FontWeight.w400,
+                                    color: Pallete.black,
+                                  ),
+                                  decoration: InputDecoration(
+                                      hintText: "  Age",
+                                      hintStyle: TextStyle(color: Pallete.lightGrey),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(w*0.03),
+                                        borderSide: BorderSide(color: Pallete.lightGrey),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(w*0.03), // Rounded borders
+                                        borderSide: BorderSide(color: Pallete.black,width: w*0.004),
+                                      )
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: h*0.02,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(),
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          height: h*0.05,
+                                          width: w*0.26,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(w * 0.03),
+                                            color: Pallete.lightGrey,
+                                          ),
+                                          child:Center(child:
+                                          Text("Cancel", style: TextStyle(fontSize: w * 0.04, color: Pallete.darkGrey,fontWeight: FontWeight.w500),),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: w*0.03,),
+                                      Container(
+                                        height: h*0.05,
+                                        width: w*0.26,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(w * 0.03),
+                                          color: Pallete.blue,
+                                        ),
+                                        child:Center(child:
+                                        Text("Save", style: TextStyle(fontSize: w * 0.04, color: Pallete.white,fontWeight: FontWeight.w500),),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
                             ],
                           ),
                         ),
