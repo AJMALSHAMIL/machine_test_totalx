@@ -15,6 +15,9 @@ class Homepage extends ConsumerStatefulWidget {
 }
 
 class _HomepageState extends ConsumerState<Homepage> {
+
+  final selectAgeTypeProvider = StateProvider<String>((ref) => "All",);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +46,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                               Center(
                                 child: CircleAvatar(
                                   radius: w*0.1,
-                                    child: Image(image: AssetImage(ImageConst.profilePic))),
+                                    child: const Image(image: AssetImage(ImageConst.profilePic))),
                               ),
                               SizedBox(height: h*0.02,),
                               Text("Name", style: TextStyle(fontSize: w * 0.04, color: Pallete.lightGrey,fontWeight: FontWeight.w500),),
@@ -67,10 +70,10 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   ),
                                   decoration: InputDecoration(
                                       hintText: " Name",
-                                      hintStyle: TextStyle(color: Pallete.lightGrey),
+                                      hintStyle: const TextStyle(color: Pallete.lightGrey),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(w*0.03),
-                                        borderSide: BorderSide(color: Pallete.lightGrey),
+                                        borderSide: const BorderSide(color: Pallete.lightGrey),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(w*0.03), // Rounded borders
@@ -101,10 +104,10 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   ),
                                   decoration: InputDecoration(
                                       hintText: "  Age",
-                                      hintStyle: TextStyle(color: Pallete.lightGrey),
+                                      hintStyle: const TextStyle(color: Pallete.lightGrey),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(w*0.03),
-                                        borderSide: BorderSide(color: Pallete.lightGrey),
+                                        borderSide: const BorderSide(color: Pallete.lightGrey),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(w*0.03), // Rounded borders
@@ -117,7 +120,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(),
+                                  const SizedBox(),
                                   Row(
                                     children: [
                                       InkWell(
@@ -171,7 +174,7 @@ class _HomepageState extends ConsumerState<Homepage> {
         title: Row(
           children: [
             SvgPicture.asset(ImageConst.location,color: Pallete.white,width: w*0.05,),
-            Text(" Nilambur",style: TextStyle(color: Pallete.white,fontWeight: FontWeight.w400),)
+            const Text(" Nilambur",style: TextStyle(color: Pallete.white,fontWeight: FontWeight.w400),)
           ],
         ),
       ),
@@ -192,7 +195,6 @@ class _HomepageState extends ConsumerState<Homepage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(w * 0.1)),
                       child: TextFormField(
-                        // controller: phoneController,
                         cursorColor: Pallete.black,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
@@ -209,7 +211,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                             hintStyle: TextStyle(color: Pallete.darkGrey,fontSize: w*0.04),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(w*0.1),
-                              borderSide: BorderSide(color: Pallete.lightGrey),
+                              borderSide: const BorderSide(color: Pallete.lightGrey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(w*0.1), // Rounded borders
@@ -219,7 +221,117 @@ class _HomepageState extends ConsumerState<Homepage> {
                       ),
                     ),
                     SizedBox(width: w*0.03,),
-                    SvgPicture.asset(ImageConst.menu)
+                    Consumer(
+                      builder: (context,ref,child) {
+                        return InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                backgroundColor: Pallete.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight:Radius.circular(w*0.05),
+                                      topLeft: Radius.circular(w*0.05)),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  return StatefulBuilder(builder: (context, setState) {
+                                 return   SizedBox(
+                                      height:h*0.35,
+                                      width: w*1,
+                                      child:Padding(
+                                        padding:  EdgeInsets.all(w*0.08),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Sort", style: TextStyle(fontSize: w * 0.05, color: Pallete.black,fontWeight: FontWeight.w500),),
+                                            SizedBox(height: h*0.03,),
+                                            Row(
+                                              children: [
+                                                Radio<String>(
+                                                  value: "All",
+                                                  activeColor: Pallete.blue,
+                                                  groupValue:ref.watch(selectAgeTypeProvider),
+                                                  onChanged: (value) {
+                                                    ref
+                                                        .read(selectAgeTypeProvider.notifier)
+                                                        .update(
+                                                          (state) => value.toString(),
+                                                    );
+                                                    setState(() {
+
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  "All",
+                                                  style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Radio<String>(
+                                                  value: "Elder",
+                                                  activeColor: Pallete.blue,
+                                                  groupValue:ref.watch(selectAgeTypeProvider),
+                                                  onChanged: (value) {
+                                                    ref
+                                                        .read(selectAgeTypeProvider.notifier)
+                                                        .update(
+                                                          (state) => value.toString(),
+                                                    );setState(() {
+
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  "Age : Elder",
+                                                  style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Radio<String>(
+                                                  value: "Younger",
+                                                  activeColor: Pallete.blue,
+                                                  groupValue:ref.watch(selectAgeTypeProvider),
+                                                  onChanged: (value) {
+                                                    ref
+                                                        .read(selectAgeTypeProvider.notifier)
+                                                        .update(
+                                                          (state) => value.toString(),
+                                                    );
+                                                    setState(() {
+
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  "Age : Younger",
+                                                  style: TextStyle(
+                                                      fontSize: w * 0.04,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },);
+                                },
+                              );
+                            },
+                            child: SvgPicture.asset(ImageConst.menu));
+                      }
+                    )
                   ],
                 ),
               ),
@@ -227,7 +339,7 @@ class _HomepageState extends ConsumerState<Homepage> {
               Text("Users Lists", style: TextStyle(fontSize: w * 0.04, color: Pallete.darkGrey,fontWeight: FontWeight.w500),),
               ListView.builder(
                   shrinkWrap: true,
-                  physics: ScrollPhysics(),
+                  physics: const ScrollPhysics(),
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -260,7 +372,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                               children: [
                                 Text("Matue nwskdkn",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.04),),
                                 SizedBox(height: h*0.01,),
-                                Text("Age : ${123}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                const Text("Age : ${123}",style: TextStyle(fontWeight: FontWeight.w400),),
                               ],
                             )
                           ],
