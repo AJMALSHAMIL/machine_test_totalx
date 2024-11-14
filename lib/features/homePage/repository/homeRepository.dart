@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -48,10 +46,6 @@ class HomeRepository {
     }
   }
 
-  // Stream<List<UserModel>> StreamUser(){
-  //   return _users.snapshots().map((event) => event.docs.map((e) => UserModel.fromJson(e.data()as Map<String,dynamic>) ,).toList(),) ;
-  // }
-
   Stream<List<UserModel>> streamUsers({required String search, required String type}) {
     var query = _users.orderBy('createTime', descending: true);
 
@@ -69,39 +63,5 @@ class HomeRepository {
     return query.snapshots().map((event) =>
         event.docs.map((e) => UserModel.fromJson(e.data() as Map<String, dynamic>)).toList());
   }
-
-
-
-// if (search.isEmpty) {
-  // return _firestore
-  //     .collection(FirebaseConstants.languageCollection)
-  //     .where('delete', isEqualTo: false)
-  //     .snapshots()
-  //     .map(
-  // (event) => event.docs
-  //     .map(
-  // (e) => LanguagesModel.fromJson(e.data()),
-  // )
-  //     .toList(),
-  // );
-  // } else {
-  // return _language
-  //     .where('delete', isEqualTo: false)
-  //     .where('search', arrayContains: search.toUpperCase())
-  //     .snapshots()
-  //     .map(
-  // (event) => event.docs
-  //     .map(
-  // (e) =>
-  // LanguagesModel.fromJson(e.data() as Map<String, dynamic>),
-  // )
-  //     .toList(),
-  // );
-  // }
-  // Stream<List<UserModel>> StreamUser(String age){
-  //   return age.isEmpty ?
-  //   _users.snapshots().map((event) => event.docs.map((e) => UserModel.fromJson(e.data()),).toList(),) :
-  //   _users.where("age",isEqualTo: age).snapshots().map((event) => event.docs.map((e) => UserModel.fromJson(e.data()),).toList(),);
-  // }
 
 }
