@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:machine_test_totalx/core/commonfunction/setSearchParams.dart';
 import 'package:machine_test_totalx/core/constants/colorConst.dart';
 import 'package:machine_test_totalx/core/constants/imageConst.dart';
@@ -30,20 +32,20 @@ class _HomepageState extends ConsumerState<Homepage> {
   );
   TextEditingController searchController = TextEditingController();
 
-  // String? ImgUrl =ImageConst.profilePic;
-  //  var file;
+  String? ImgUrl =ImageConst.profilePic;
+   var file;
   // final fileProvider =StateProvider<File?>((ref) => null,);
 
-  // PickFile(ImageSource) async{
-  //   final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
-  //   file = File(imageFile!.path);
-  //   if(mounted){
-  //     setState(() {
-  //       file = File(imageFile.path);
-  //       ref.watch(fileProvider.notifier).update((state) => file,);
-  //     });
-  //   }
-  // }
+  PickFile(ImageSource) async{
+    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    file = File(imageFile!.path);
+    if(mounted){
+      setState(() {
+        file = File(imageFile.path);
+        // ref.watch(fileProvider.notifier).update((state) => file,);
+      });
+    }
+  }
 
   addWorker() {
     ref.watch(homeControllerProvider).addUser(
@@ -54,7 +56,7 @@ class _HomepageState extends ConsumerState<Homepage> {
             photoUrl: "",
             search: setSearchParam2('${nameController.text.trim()}'),
           ),
-          context: context,
+          context: context, file:file,
         );
   }
 
@@ -66,10 +68,9 @@ class _HomepageState extends ConsumerState<Homepage> {
         onTap: () {
           showDialog(
               context: context,
-              builder: (BuildContext context) {
-                return StatefulBuilder(
+              builder: (context)=> StatefulBuilder(
                   builder: (context, setState) {
-                    return AlertDialog(
+                    return  AlertDialog(
                         backgroundColor: Pallete.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(w * 0.04),
@@ -102,7 +103,10 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             actions: [
                                               CupertinoActionSheetAction(
                                                 onPressed: () {
-                                                  // PickFile(ImageSource.gallery);
+                                                  PickFile(ImageSource.gallery);
+                                                  setState(() {
+
+                                                  },);
                                                   Navigator.pop(context);
                                                 },
                                                 isDefaultAction: true,
@@ -110,31 +114,34 @@ class _HomepageState extends ConsumerState<Homepage> {
                                                   "Gallery",
                                                   style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                       color: Pallete.black),
                                                 ),
                                               ),
                                               CupertinoActionSheetAction(
                                                   onPressed: () {
-                                                    // PickFile(ImageSource.camera);
+                                                    PickFile(ImageSource.camera);
+                                                    setState(() {
+
+                                                    },);
                                                     Navigator.pop(context);
                                                   },
                                                   child: const Text("Camera",
                                                       style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.w500,
+                                                          FontWeight.w500,
                                                           color:
-                                                              Pallete.black))),
+                                                          Pallete.black))),
                                             ],
                                             cancelButton:
-                                                CupertinoActionSheetAction(
+                                            CupertinoActionSheetAction(
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
                                               child: const Text("Cancel",
                                                   style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                       color: Pallete.black)),
                                             ),
                                           );
@@ -142,14 +149,14 @@ class _HomepageState extends ConsumerState<Homepage> {
                                       );
                                     },
                                     child:
-                                        // ref.watch(fileProvider) != null? CircleAvatar(
-                                        //   radius: w*0.1,
-                                        //   backgroundImage:FileImage(ref.watch(fileProvider)!),
-                                        // ):
-                                        CircleAvatar(
+                                    file != null? CircleAvatar(
+                                      radius: w*0.1,
+                                      backgroundImage:FileImage(file!),
+                                    ):
+                                    CircleAvatar(
                                       radius: w * 0.1,
                                       backgroundImage:
-                                          const AssetImage(ImageConst.profilePic),
+                                      const AssetImage(ImageConst.profilePic),
                                     ),
                                   ),
                                 ),
@@ -171,7 +178,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   width: w * 1,
                                   decoration: BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.circular(w * 0.02)),
+                                      BorderRadius.circular(w * 0.02)),
                                   child: TextFormField(
                                     controller: nameController,
                                     cursorColor: Pallete.black,
@@ -187,13 +194,13 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             color: Pallete.lightGrey),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(w * 0.03),
+                                          BorderRadius.circular(w * 0.03),
                                           borderSide: const BorderSide(
                                               color: Pallete.lightGrey),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(w * 0.03),
+                                          BorderRadius.circular(w * 0.03),
                                           borderSide: BorderSide(
                                               color: Pallete.black,
                                               width: w * 0.004),
@@ -218,7 +225,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   width: w * 1,
                                   decoration: BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.circular(w * 0.02)),
+                                      BorderRadius.circular(w * 0.02)),
                                   child: TextFormField(
                                     controller: ageController,
                                     cursorColor: Pallete.black,
@@ -238,13 +245,13 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             color: Pallete.lightGrey),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(w * 0.03),
+                                          BorderRadius.circular(w * 0.03),
                                           borderSide: const BorderSide(
                                               color: Pallete.lightGrey),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(w * 0.03),
+                                          BorderRadius.circular(w * 0.03),
                                           borderSide: BorderSide(
                                               color: Pallete.black,
                                               width: w * 0.004),
@@ -256,7 +263,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     const SizedBox(),
                                     Row(
@@ -270,8 +277,8 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             width: w * 0.26,
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      w * 0.03),
+                                              BorderRadius.circular(
+                                                  w * 0.03),
                                               color: Pallete.lightGrey,
                                             ),
                                             child: Center(
@@ -281,7 +288,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                                     fontSize: w * 0.04,
                                                     color: Pallete.darkGrey,
                                                     fontWeight:
-                                                        FontWeight.w500),
+                                                    FontWeight.w500),
                                               ),
                                             ),
                                           ),
@@ -301,8 +308,8 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             width: w * 0.26,
                                             decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      w * 0.03),
+                                              BorderRadius.circular(
+                                                  w * 0.03),
                                               color: Pallete.blue,
                                             ),
                                             child: Center(
@@ -312,7 +319,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                                     fontSize: w * 0.04,
                                                     color: Pallete.white,
                                                     fontWeight:
-                                                        FontWeight.w500),
+                                                    FontWeight.w500),
                                               ),
                                             ),
                                           ),
@@ -325,9 +332,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                             ),
                           ),
                         ));
-                  },
-                );
-              });
+                  },));
         },
         child: CircleAvatar(
           radius: w * 0.1,
@@ -451,7 +456,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             SizedBox(
-                                              height: h * 0.03,
+                                              height: h * 0.01,
                                             ),
                                             Row(
                                               children: [
@@ -605,11 +610,13 @@ class _HomepageState extends ConsumerState<Homepage> {
                                         child: Row(
                                           children: [
                                             SizedBox(width: w * 0.03),
-                                            CircleAvatar(
+                                           data[index].photoUrl.isNotEmpty? CircleAvatar(
                                               radius: w * 0.1,
-                                              backgroundImage: NetworkImage(user
-                                                  .photoUrl),
-                                            ),
+                                              backgroundImage: NetworkImage(data[index].photoUrl),
+                                            ):CircleAvatar(
+                                             radius: w*0.1,
+                                             backgroundImage: const AssetImage(ImageConst.profilePic),
+                                           ),
                                             SizedBox(width: w * 0.03),
                                             Column(
                                               mainAxisAlignment:

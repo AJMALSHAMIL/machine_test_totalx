@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:machine_test_totalx/features/homePage/repository/homeRepository.dart';
@@ -21,8 +22,8 @@ class Homecontroller {
   Homecontroller({required HomeRepository repository})
       : _repository = repository;
 
-  addUser({required UserModel usermodel, required BuildContext context}) async {
-    final res = await _repository.addUser(userModel: usermodel);
+  addUser({required UserModel usermodel, required BuildContext context, required File file}) async {
+    final res = await _repository.addUser(userModel: usermodel, file: file);
     res.fold(
       (l) {
         print('llllllllllllllllll');

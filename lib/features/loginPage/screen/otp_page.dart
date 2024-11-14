@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,9 +42,17 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                           await PhoneAuthProvider.credential(
                               verificationId: widget.verificationId,
                               smsCode: otpController.text.toString());
-                      FirebaseAuth.instance.signInWithCredential(credential).then((value) {
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => const Homepage(),));
-                      },);
+                      FirebaseAuth.instance
+                          .signInWithCredential(credential)
+                          .then(
+                        (value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Homepage(),
+                              ));
+                        },
+                      );
                     } catch (e) {
                       Failure(e.toString());
                     }
@@ -88,7 +94,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
               child: SizedBox(
                 width: w * 0.5,
                 height: h * 0.2,
-                child: Image(image: AssetImage(ImageConst.otppage)),
+                child: const Image(image: AssetImage(ImageConst.otppage)),
               ),
             ),
             SizedBox(

@@ -20,14 +20,14 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _verifyPhoneNumber(BuildContext context) async {
-
     await _auth.verifyPhoneNumber(
       phoneNumber: "+91${phoneController.text}",
       verificationCompleted: (PhoneAuthCredential credential) {
         _auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        showSnackBar(context: context, content: e.message ?? "Verification failed");
+        showSnackBar(
+            context: context, content: e.message ?? "Verification failed");
       },
       codeSent: (String verificationId, int? resendToken) {
         Navigator.push(
@@ -48,8 +48,8 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        height: h*0.1,
-        width: w*1,
+        height: h * 0.1,
+        width: w * 1,
         color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -63,12 +63,14 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                     if (phoneController.text.length == 10) {
                       _verifyPhoneNumber(context);
                     } else {
-                      showSnackBar(context: context, content: 'Enter a valid 10-digit mobile number');
+                      showSnackBar(
+                          context: context,
+                          content: 'Enter a valid 10-digit mobile number');
                     }
                   },
                   child: Container(
-                    height: h*0.06,
-                    width: w*0.8,
+                    height: h * 0.06,
+                    width: w * 0.8,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(w * 0.10),
                       color: Pallete.black,
@@ -78,7 +80,7 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                         "Get OTP",
                         style: TextStyle(
                           color: Pallete.white,
-                          fontSize: w*0.04,
+                          fontSize: w * 0.04,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -92,31 +94,35 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
       ),
       backgroundColor: Pallete.white,
       body: Padding(
-        padding: EdgeInsets.all(w*0.03),
+        padding: EdgeInsets.all(w * 0.03),
         child: Column(
           children: [
-            SizedBox(height: h*0.1),
+            SizedBox(height: h * 0.1),
             SizedBox(
-              width: w*0.5,
-              height: h*0.2,
+              width: w * 0.5,
+              height: h * 0.2,
               child: const Image(image: AssetImage(ImageConst.mobilepage)),
             ),
-            SizedBox(height: h*0.07),
+            SizedBox(height: h * 0.07),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: w*0.03),
+                SizedBox(width: w * 0.03),
                 Text(
                   'Enter Mobile Number',
-                  style: TextStyle(fontSize: w*0.04, color: Pallete.black, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: w * 0.04,
+                      color: Pallete.black,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),
-            SizedBox(height: h*0.02),
+            SizedBox(height: h * 0.02),
             Container(
-              height: h*0.07,
-              width: w*1,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(w*0.02)),
+              height: h * 0.07,
+              width: w * 1,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(w * 0.02)),
               child: TextFormField(
                 controller: phoneController,
                 cursorColor: Pallete.black,
@@ -126,29 +132,34 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                   FilteringTextInputFormatter.digitsOnly,
                 ],
                 style: TextStyle(
-                  fontSize: w*0.06,
+                  fontSize: w * 0.06,
                   fontWeight: FontWeight.w400,
                   color: Pallete.black,
                 ),
                 decoration: InputDecoration(
                   prefixIcon: Padding(
-                    padding:  EdgeInsets.all(w*0.03),
-                    child: Text("+91",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.06),),
+                    padding: EdgeInsets.all(w * 0.03),
+                    child: Text(
+                      "+91",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: w * 0.06),
+                    ),
                   ),
                   hintText: "  Enter Phone Number*",
                   hintStyle: const TextStyle(color: Pallete.lightGrey),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(w*0.03),
+                    borderRadius: BorderRadius.circular(w * 0.03),
                     borderSide: const BorderSide(color: Pallete.lightGrey),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(w*0.03),
-                    borderSide: BorderSide(color: Pallete.black, width: w*0.004),
+                    borderRadius: BorderRadius.circular(w * 0.03),
+                    borderSide:
+                        BorderSide(color: Pallete.black, width: w * 0.004),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: h*0.02),
+            SizedBox(height: h * 0.02),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,21 +167,33 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                   children: [
                     Text(
                       "By Continuing, I agree to TotalX’s",
-                      style: TextStyle(fontSize: w*0.035, color: Pallete.darkGrey, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: w * 0.035,
+                          color: Pallete.darkGrey,
+                          fontWeight: FontWeight.w500),
                     ),
                     Text(
                       " Terms and condition",
-                      style: TextStyle(fontSize: w*0.035, color: Pallete.blue, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: w * 0.035,
+                          color: Pallete.blue,
+                          fontWeight: FontWeight.w500),
                     ),
                     Text(
                       " &",
-                      style: TextStyle(fontSize: w*0.035, color: Pallete.darkGrey, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: w * 0.035,
+                          color: Pallete.darkGrey,
+                          fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
                 Text(
                   " privacy policy",
-                  style: TextStyle(fontSize: w*0.035, color: Pallete.blue, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: w * 0.035,
+                      color: Pallete.blue,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),
