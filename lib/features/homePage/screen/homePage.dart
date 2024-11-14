@@ -293,6 +293,8 @@ class _HomepageState extends ConsumerState<Homepage> {
                                           onTap: () {
                                             addWorker();
                                             Navigator.pop(context);
+                                            nameController.clear();
+                                            ageController.clear();
                                           },
                                           child: Container(
                                             height: h * 0.05,
@@ -606,7 +608,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                             CircleAvatar(
                                               radius: w * 0.1,
                                               backgroundImage: NetworkImage(user
-                                                  .photoUrl), // Assuming `avatarUrl` in UserModel
+                                                  .photoUrl),
                                             ),
                                             SizedBox(width: w * 0.03),
                                             Column(
