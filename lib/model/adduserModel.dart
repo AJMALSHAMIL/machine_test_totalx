@@ -1,41 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel{
-  String id;
   DateTime createTime;
   String name;
-  String age;
+  int age;
   String photoUrl;
-  DocumentReference? reference;
+  List<dynamic> search;
+
 
   UserModel({
-    required this.id,
     required this.createTime,
     required this.name,
     required this.age,
     required this.photoUrl,
-    this.reference,
+    required this.search
+
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       createTime: json['createTime'].toDate(),
       name: json['name'] as String,
-      age: json['age'] as String,
+      age: json['age'] as int,
       photoUrl: json['photoUrl'] as String,
-      reference: json['reference'] as DocumentReference,
-      id: json['id'] as String,
+      search: json['search'] as List<dynamic>,
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["createTime"] = createTime ;
-    data["id"] = id;
     data["name"] = name ;
     data["age"] = age ;
     data["photoUrl"] = photoUrl ;
-    data['reference'] = reference ?? reference;
+    data['search'] = search;
     return data;
   }
 
@@ -43,17 +41,16 @@ class UserModel{
     DateTime? createTime,
     String? id,
     String? name,
-    String? age,
+    int? age,
     String? photoUrl,
-    DocumentReference? reference,
+    List<dynamic>? search,
   }) {
     return UserModel(
       createTime: createTime ?? this.createTime,
-      id: id ?? this.id,
       age: age ?? this.age,
       name: name ?? this.name,
       photoUrl: photoUrl ?? this.photoUrl,
-      reference: reference ?? this.reference,
+      search: search ?? this.search,
     );
   }
 }

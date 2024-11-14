@@ -1,11 +1,10 @@
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:machine_test_totalx/core/commonfunction/setSearchParams.dart';
 import 'package:machine_test_totalx/core/constants/colorConst.dart';
 import 'package:machine_test_totalx/core/constants/imageConst.dart';
 import 'package:machine_test_totalx/model/adduserModel.dart';
@@ -26,33 +25,36 @@ class _HomepageState extends ConsumerState<Homepage> {
 
   TextEditingController nameController =TextEditingController();
   TextEditingController ageController =TextEditingController();
+  final searchProvider=StateProvider((ref) => '',);
+  TextEditingController searchController =TextEditingController();
 
-  String? ImgUrl =ImageConst.profilePic;
-   var file;
-  final fileProvider =StateProvider<File?>((ref) => null,);
+  // String? ImgUrl =ImageConst.profilePic;
+  //  var file;
+  // final fileProvider =StateProvider<File?>((ref) => null,);
 
-  PickFile(ImageSource) async{
-    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
-    file = File(imageFile!.path);
-    if(mounted){
-      setState(() {
-        file = File(imageFile.path);
-        ref.watch(fileProvider.notifier).update((state) => file,);
-      });
-    }
-  }
+  // PickFile(ImageSource) async{
+  //   final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+  //   file = File(imageFile!.path);
+  //   if(mounted){
+  //     setState(() {
+  //       file = File(imageFile.path);
+  //       ref.watch(fileProvider.notifier).update((state) => file,);
+  //     });
+  //   }
+  // }
 
 
   addWorker() {
     ref.watch(homeControllerProvider).addUser(
         usermodel: UserModel(
-            id: '',
             createTime: DateTime.now(),
             name: nameController.text,
-            age: ageController.text,
-            photoUrl: ""
+            age: int.tryParse(ageController.text)!,
+            photoUrl: "",
+            search: setSearchParam2('${nameController.text.trim()}'),
+
         ),
-        file: file, context: context
+         context: context,
     );
   }
 
@@ -94,7 +96,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                               actions: [
                                                 CupertinoActionSheetAction(
                                                   onPressed: () {
-                                                    PickFile(ImageSource.gallery);
+                                                    // PickFile(ImageSource.gallery);
                                                     Navigator.pop(context);
                                                   },
                                                   isDefaultAction: true,
@@ -106,7 +108,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                                 ),
                                                 CupertinoActionSheetAction(
                                                     onPressed: () {
-                                                      PickFile(ImageSource.camera);
+                                                      // PickFile(ImageSource.camera);
                                                       Navigator.pop(context);
                                                     },
                                                     child: Text("Camera",
@@ -128,10 +130,12 @@ class _HomepageState extends ConsumerState<Homepage> {
                                           },
                                         );
                                       },
-                                      child:ref.watch(fileProvider) != null? CircleAvatar(
-                                        radius: w*0.1,
-                                        backgroundImage:FileImage(ref.watch(fileProvider)!),
-                                      ):CircleAvatar(
+                                      child:
+                                      // ref.watch(fileProvider) != null? CircleAvatar(
+                                      //   radius: w*0.1,
+                                      //   backgroundImage:FileImage(ref.watch(fileProvider)!),
+                                      // ):
+                                    CircleAvatar(
                                         radius: w*0.1,
                                         backgroundImage: AssetImage(ImageConst.profilePic),
                                       ),
@@ -276,7 +280,7 @@ class _HomepageState extends ConsumerState<Homepage> {
         backgroundColor: Pallete.black,
         leading: Row(
           children: [
-            SvgPicture.asset(ImageConst.location,color: Pallete.white,width: w*0.05,),
+            SizedBox(child: SvgPicture.asset(ImageConst.location,color: Pallete.white,width: w*0.05,)),
              Text(" Nilambur",style: TextStyle(color: Pallete.white,fontWeight: FontWeight.w400,fontSize: w*0.06),)
           ],
         ),
@@ -314,7 +318,9 @@ class _HomepageState extends ConsumerState<Homepage> {
                       width: w * 0.75,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(w * 0.1)),
-                      child: TextFormField(
+                      child: TextFormField(controller:searchController ,onChanged:(value) {
+                        ref.read(searchProvider.notifier).update((state) => value,);
+                      },
                         cursorColor: Pallete.black,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
@@ -449,7 +455,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                 },
                               );
                             },
-                            child: SvgPicture.asset(ImageConst.menu));
+                            child: SizedBox(child: SvgPicture.asset(ImageConst.menu)));
                       }
                     )
                   ],
@@ -457,54 +463,84 @@ class _HomepageState extends ConsumerState<Homepage> {
               ),
               SizedBox(height: h*0.03,),
               Text("Users Lists", style: TextStyle(fontSize: w * 0.04, color: Pallete.darkGrey,fontWeight: FontWeight.w500),),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding:  EdgeInsets.all(w*0.02),
-                      child: Container(
-                        width: w*1,
-                        height: h*0.13,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(w*0.04),
-                          color: Pallete.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                              spreadRadius: 2,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: w*0.03,),
-                            CircleAvatar(
-                              radius: w*0.1,
-                            ),
-                            SizedBox(width: w*0.03,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Matue nwskdkn",style: TextStyle(fontWeight: FontWeight.w600,fontSize: w*0.04),),
-                                SizedBox(height: h*0.01,),
-                                const Text("Age : ${123}",style: TextStyle(fontWeight: FontWeight.w400),),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-              ),
-            ],
+       Consumer(builder: (context, ref, child) {
+        return ref.watch(
+           streamUser(
+             jsonEncode({
+               "type": ref.watch(selectAgeTypeProvider),
+               "search": ref.watch(searchProvider),
+             }),
+           ),
+         ).when(
+           data: (data) {
+             return data.isEmpty
+                 ? const Center(child: Text('No User Found'))
+                 : ListView.builder(
+               shrinkWrap: true,
+               physics: const ScrollPhysics(),
+               itemCount: data.length,
+               itemBuilder: (context, index) {
+                 final user=data[index];
+                 return  Padding(
+                   padding: EdgeInsets.all(w * 0.02),
+                   child: Container(
+                     width: w,
+                     height: h * 0.13,
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(w * 0.04),
+                       color: Pallete.white,
+                       boxShadow: [
+                         BoxShadow(
+                           color: Colors.black.withOpacity(0.1),
+                           blurRadius: 4,
+                           spreadRadius: 2,
+                           offset: const Offset(0, 1),
+                         ),
+                       ],
+                     ),
+                     child: Row(
+                       children: [
+                         SizedBox(width: w * 0.03),
+                         CircleAvatar(
+                           radius: w * 0.1,
+                           backgroundImage: NetworkImage(user.photoUrl), // Assuming `avatarUrl` in UserModel
+                         ),
+                         SizedBox(width: w * 0.03),
+                         Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text(
+                               user.name,
+                               style: TextStyle(fontWeight: FontWeight.w600, fontSize: w * 0.04),
+                             ),
+                             SizedBox(height: w * 0.01),
+                             Text(
+                               "Age : ${user.age}",
+                               style: TextStyle(fontWeight: FontWeight.w400),
+                             ),
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
+                 );
+               },
+             );
+           },
+           error: (error, stackTrace) => Text(error.toString()),
+           loading: () => const Center(child: CircularProgressIndicator()),
+         );
+       },)
+
+
+        ],
           ),
         ),
       ),
     );
+
   }
 }
+
+
