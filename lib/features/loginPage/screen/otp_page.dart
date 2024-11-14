@@ -37,6 +37,11 @@ class _OtpPageState extends ConsumerState<OtpPage> {
               Consumer(builder: (context, ref, child) {
                 return InkWell(
                   onTap: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Homepage(),
+                        ));
                     try {
                       PhoneAuthCredential credential =
                           await PhoneAuthProvider.credential(

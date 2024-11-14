@@ -11,18 +11,18 @@ import '../../../core/providers/providers.dart';
 
 final homeRepositoryProvider = Provider((ref) => HomeRepository(
   firestore: ref.read(firestoreprovider),
-  firebaseStorage: ref.read(firebaseStorageProvider),
+  // firebaseStorage: ref.read(firebaseStorageProvider),
 ));
 
 class HomeRepository {
   final FirebaseFirestore _firestore;
-   final FirebaseStorage _firebaseStorage;
+   // final FirebaseStorage _firebaseStorage;
 
   HomeRepository({
     required FirebaseFirestore firestore,
-     required FirebaseStorage firebaseStorage,
-  })  : _firestore = firestore,
-         _firebaseStorage = firebaseStorage;
+     // required FirebaseStorage firebaseStorage,
+  })  : _firestore = firestore;
+         // _firebaseStorage = firebaseStorage;
 
   CollectionReference get _users =>
       _firestore.collection(FirebaseConstant.usermodelCollection);
@@ -30,17 +30,18 @@ class HomeRepository {
 
   Future<Either<Failure, UserModel>> addUser({
     required UserModel userModel,
-     required File file,
+     // required File file,
   }) async {
     try {
       print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
-      print(file);
-      String imageExtension = file.path.split(".").last;
-      var uploadingImg = await _firebaseStorage
-          .ref("users/images/${DateTime.now().toString()}")
-          .putFile(file, SettableMetadata(contentType: "image/$imageExtension"));
-      String imageUrl = await uploadingImg.ref.getDownloadURL();
-      DocumentReference documentReference = await _users.add(userModel.toJson());
+      // print(file);
+      // String imageExtension = file.path.split(".").last;
+      // var uploadingImg = await _firebaseStorage
+      //     .ref("users/images/${DateTime.now().toString()}")
+      //     .putFile(file, SettableMetadata(contentType: "image/$imageExtension"));
+      // String imageUrl = await uploadingImg.ref.getDownloadURL();
+
+       DocumentReference documentReference = await _users.add(userModel.toJson());
 
       return right(userModel.copyWith(photoUrl: '', id: documentReference.id));
     } catch (e) {

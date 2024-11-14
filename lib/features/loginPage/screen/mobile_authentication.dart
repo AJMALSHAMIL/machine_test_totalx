@@ -60,12 +60,19 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
               Consumer(builder: (context, ref, child) {
                 return InkWell(
                   onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtpPage(verificationId: '',),
+                      ),
+                    );
                     if (phoneController.text.length == 10) {
                       _verifyPhoneNumber(context);
                     } else {
                       showSnackBar(
                           context: context,
                           content: 'Enter a valid 10-digit mobile number');
+
                     }
                   },
                   child: Container(
