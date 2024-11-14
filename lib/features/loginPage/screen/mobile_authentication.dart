@@ -63,7 +63,9 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OtpPage(verificationId: '',),
+                        builder: (context) => OtpPage(
+                          verificationId: '',
+                        ),
                       ),
                     );
                     if (phoneController.text.length == 10) {
@@ -72,7 +74,6 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                       showSnackBar(
                           context: context,
                           content: 'Enter a valid 10-digit mobile number');
-
                     }
                   },
                   child: Container(
@@ -175,21 +176,21 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                     Text(
                       "By Continuing, I agree to TotalX’s",
                       style: TextStyle(
-                          fontSize: w * 0.03,
+                          fontSize: w * 0.033,
                           color: Pallete.darkGrey,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
                       " Terms and condition",
                       style: TextStyle(
-                          fontSize: w * 0.03,
+                          fontSize: w * 0.033,
                           color: Pallete.blue,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
                       " &",
                       style: TextStyle(
-                          fontSize: w * 0.03,
+                          fontSize: w * 0.033,
                           color: Pallete.darkGrey,
                           fontWeight: FontWeight.w500),
                     ),
@@ -198,7 +199,7 @@ class _MobileAuthenticationState extends ConsumerState<MobileAuthentication> {
                 Text(
                   " privacy policy",
                   style: TextStyle(
-                      fontSize: w * 0.03,
+                      fontSize: w * 0.033,
                       color: Pallete.blue,
                       fontWeight: FontWeight.w500),
                 ),

@@ -1,4 +1,3 @@
-class FirebaseConstant{
-
-  static const usermodelCollection ='users';
+class FirebaseConstant {
+  static const usermodelCollection = 'users';
 }

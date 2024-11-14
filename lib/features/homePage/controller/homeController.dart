@@ -22,20 +22,20 @@ class Homecontroller {
   Homecontroller({required HomeRepository repository})
       : _repository = repository;
 
-  addUser({required UserModel usermodel, required BuildContext context, required
-  // File file
+  addUser({
+    required UserModel usermodel,
+    required BuildContext context,
+    // required File file
   }) async {
-    final res = await _repository.addUser(userModel: usermodel,
-// file: file
-);
+    final res = await _repository.addUser(
+      userModel: usermodel,
+      // file: file
+    );
     res.fold(
       (l) {
-        print('llllllllllllllllll');
-        print(l.message);
         showSnackBar(context: context, content: l.message);
       },
       (r) {
-        print('rrrrrrrrrrrrrrrrrrr');
         showSnackBar(content: 'success', context: context);
       },
     );

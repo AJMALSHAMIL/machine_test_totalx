@@ -11,6 +11,7 @@ import 'package:machine_test_totalx/core/commonfunction/setSearchParams.dart';
 import 'package:machine_test_totalx/core/constants/colorConst.dart';
 import 'package:machine_test_totalx/core/constants/imageConst.dart';
 import 'package:machine_test_totalx/model/adduserModel.dart';
+import '../../../core/constants/faliure.dart';
 import '../../../main.dart';
 import '../controller/homeController.dart';
 import 'customlisttile.dart';
@@ -36,7 +37,6 @@ class _HomepageState extends ConsumerState<Homepage> {
 
   String? ImgUrl = ImageConst.profilePic;
   var file;
-  // final fileProvider =StateProvider<File?>((ref) => null,);
 
   PickFile(ImageSource) async {
     final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
@@ -44,7 +44,6 @@ class _HomepageState extends ConsumerState<Homepage> {
     if (mounted) {
       setState(() {
         file = File(imageFile.path);
-        // ref.watch(fileProvider.notifier).update((state) => file,);
       });
     }
   }
@@ -66,6 +65,12 @@ class _HomepageState extends ConsumerState<Homepage> {
     try {
       userStream = FirebaseFirestore.instance
           .collection('users')
+          .where('age',
+              isGreaterThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Elder' ? 60 : null)
+          .where('age',
+              isLessThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Younger' ? 59 : null)
           .where(
             'search',
             arrayContains:
@@ -81,6 +86,15 @@ class _HomepageState extends ConsumerState<Homepage> {
       AggregateQuerySnapshot userCountt = await FirebaseFirestore.instance
           .collection('users')
           .where(
+            'age',
+          )
+          .where('age',
+              isGreaterThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Elder' ? 60 : null)
+          .where('age',
+              isLessThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Younger' ? 59 : null)
+          .where(
             'search',
             arrayContains:
                 ref.watch(searchProvider).toString().toUpperCase().isEmpty
@@ -91,10 +105,8 @@ class _HomepageState extends ConsumerState<Homepage> {
           .get();
 
       userCount = userCountt.count!;
-      print(userCount);
-      print("datacount");
     } catch (e) {
-      print(e.toString());
+      Failure(e.toString());
     }
     setState(() {});
   }
@@ -109,6 +121,12 @@ class _HomepageState extends ConsumerState<Homepage> {
     } else {
       userStream = FirebaseFirestore.instance
           .collection('users')
+          .where('age',
+              isGreaterThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Elder' ? 60 : null)
+          .where('age',
+              isLessThanOrEqualTo:
+                  ref.watch(selectAgeTypeProvider) == 'Younger' ? 59 : null)
           .where(
             'search',
             arrayContains:
@@ -116,7 +134,6 @@ class _HomepageState extends ConsumerState<Homepage> {
                     ? null
                     : ref.watch(searchProvider).toString().toUpperCase(),
           )
-          // .startAfterDocument(lastDoc!)
           .limit(((pageIndex + 1) * limits))
           .snapshots()
           .map((event) => event.docs
@@ -517,8 +534,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   const BorderSide(color: Pallete.lightGrey),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  w * 0.1), // Rounded borders
+                              borderRadius: BorderRadius.circular(w * 0.1),
                               borderSide: BorderSide(
                                   color: Pallete.black, width: w * 0.004),
                             )),
@@ -675,30 +691,27 @@ class _HomepageState extends ConsumerState<Homepage> {
                 stream: userStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    print(snapshot.error);
-                    print(snapshot.stackTrace);
                     return const Center(child: Text("An error occurred."));
                   }
                   if (!snapshot.hasData) {
                     return const Center(child: Center(child: Text("No Data")));
                   }
-
                   var data = snapshot.data ?? [];
                   if (data.isNotEmpty) {
                     lastDoc = data.last;
-                    // lastDocuments[pageIndex] = lastDoc;
                     firstDoc = data.first;
                   }
                   return ref.watch(loadingProvider)
                       ? SizedBox(
                           width: w,
                           height: h * 0.84,
-                          child: Center(child: CircularProgressIndicator()))
+                          child:
+                              const Center(child: CircularProgressIndicator()))
                       : SizedBox(
                           width: w,
                           height: h * 0.84,
                           child: data.isEmpty
-                              ? Center(child: CircularProgressIndicator())
+                              ? const Center(child: CircularProgressIndicator())
                               : LazyLoadScrollView(
                                   isLoading: isLoadingVertical,
                                   scrollDirection: Axis.vertical,
@@ -706,8 +719,6 @@ class _HomepageState extends ConsumerState<Homepage> {
                                     if (userCount >
                                         ((pageIndex + 1) * limits)) {
                                       await next();
-                                      print(next());
-                                      print("nexttttttttttttttttt");
                                     }
                                   },
                                   child: CustomListLayout(
@@ -717,11 +728,21 @@ class _HomepageState extends ConsumerState<Homepage> {
                                         onTap: () {},
                                         child: CustomListTile(
                                           bgColor: Pallete.white,
-                                          leading: CircleAvatar(
-                                            radius: w * 0.08,
-                                            backgroundImage: NetworkImage(
-                                                data[index].photoUrl),
-                                          ),
+                                          leading: data[index]
+                                                  .photoUrl
+                                                  .isNotEmpty
+                                              ? CircleAvatar(
+                                                  radius: w * 0.08,
+                                                  backgroundImage: NetworkImage(
+                                                      data[index].photoUrl),
+                                                )
+                                              : CircleAvatar(
+                                                  radius: w * 0.1,
+                                                  backgroundImage:
+                                                      const AssetImage(
+                                                          ImageConst
+                                                              .profilePic),
+                                                ),
                                           title: Text(
                                             data[index].name,
                                             style: TextStyle(
@@ -742,7 +763,7 @@ class _HomepageState extends ConsumerState<Homepage> {
                                   ),
                                 ));
                 },
-              )
+              ),
             ],
           ),
         ),

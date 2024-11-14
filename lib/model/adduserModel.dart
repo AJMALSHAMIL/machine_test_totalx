@@ -1,21 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserModel{
+class UserModel {
   DateTime createTime;
   String name;
   int age;
   String photoUrl;
   List<dynamic> search;
 
-
-  UserModel({
-    required this.createTime,
-    required this.name,
-    required this.age,
-    required this.photoUrl,
-    required this.search
-
-  });
+  UserModel(
+      {required this.createTime,
+      required this.name,
+      required this.age,
+      required this.photoUrl,
+      required this.search});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -29,10 +26,10 @@ class UserModel{
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["createTime"] = createTime ;
-    data["name"] = name ;
-    data["age"] = age ;
-    data["photoUrl"] = photoUrl ;
+    data["createTime"] = createTime;
+    data["name"] = name;
+    data["age"] = age;
+    data["photoUrl"] = photoUrl;
     data['search'] = search;
     return data;
   }

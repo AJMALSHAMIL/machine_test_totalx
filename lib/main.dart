@@ -24,7 +24,6 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -36,9 +35,9 @@ class MyApp extends StatelessWidget {
       onTap: () {
         FocusManager.instance.primaryFocus!.unfocus();
       },
-      child:  MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-         home:  MobileAuthentication(),
+        home: MobileAuthentication(),
       ),
     );
   }
